@@ -31,7 +31,7 @@ class Cart:
         request.session[CART_ID] = cart.id
         return cart
 
-    def add(self, product, unit_price, quantity=1):
+    def add(self, product, unit_price, quantity=1, override_quantity=False):
         try:
             item = models.Item.objects.get(
                 cart=self.cart,
@@ -46,7 +46,7 @@ class Cart:
             item.save()
         else: #ItemAlreadyExists
             item.unit_price = unit_price
-            item.quantity = item.quantity + int(quantity)
+            item.quantity = quantity if override_quantity else item.quantity + int(quantity)
             item.save()
 
     def remove(self, product):

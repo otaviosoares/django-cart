@@ -1,3 +1,4 @@
+#coding: utf-8
 #!/usr/bin/env python
 
 import os
@@ -7,13 +8,13 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-        name='django-cart',
-        version='1.0.1',
+        name='django-cart-improved',
+        version='1.0.0',
         description='Django simple shopping cart, tests and south migrations included',
-        maintainer='Bruno Carvalho',
-        maintainer_email='bmentges@gmail.com',
+        maintainer=u'Otávio Soares',
+        maintainer_email='otaviokk@gmail.com',
         license="GNU v3",
-        url='https://github.com/bmentges/django-cart',
+        url='https://github.com/otaviosoares/django-cart',
         packages=['cart', 'cart.migrations'],
         classifiers=[
             "Development Status :: 5 - Production/Stable", 
