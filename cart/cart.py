@@ -21,8 +21,11 @@ class Cart:
             cart = self.new(request)
         self.cart = cart
 
-    def __iter__(self):
-        for item in self.cart.item_set.all():
+    def __iter__(self, **kwargs):
+        self.get_items()
+
+    def get_items(self, **kwargs):
+        for item in self.cart.item_set.filter(**kwargs):
             yield item
 
     def new(self, request):
