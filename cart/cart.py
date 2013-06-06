@@ -1,8 +1,6 @@
 import datetime
 import models
 
-CART_ID = 'CART-ID'
-
 class ItemAlreadyExists(Exception):
     pass
 
@@ -10,8 +8,9 @@ class ItemDoesNotExist(Exception):
     pass
 
 class Cart:
-    def __init__(self, request):
-        cart_id = request.session.get(CART_ID)
+    def __init__(self, request, session_key='MAIN_CART_ID'):
+        self.session_key = session_key
+        cart_id = request.session.get(self.session_key)
         if cart_id:
             try:
                 cart = models.Cart.objects.get(id=cart_id, checked_out=False)
@@ -31,10 +30,10 @@ class Cart:
     def new(self, request):
         cart = models.Cart(creation_date=datetime.datetime.now())
         cart.save()
-        request.session[CART_ID] = cart.id
+        request.session[self.session_key] = cart.id
         return cart
 
-    def add(self, product, unit_price, quantity=1, override_quantity=False):
+    def add(self, product, unit_price, quantity=1, override_quantity=False, options=None):
         try:
             item = models.Item.objects.get(
                 cart=self.cart,
@@ -46,8 +45,16 @@ class Cart:
             item.product = product
             item.unit_price = unit_price
             item.quantity = quantity
+            if options:
+                item.options = options
+
             item.save()
         else: #ItemAlreadyExists
+
+            if options:
+                item.clear_options()
+                item.options = options
+                
             item.unit_price = unit_price
             item.quantity = quantity if override_quantity else item.quantity + int(quantity)
             item.save()

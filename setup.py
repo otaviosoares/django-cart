@@ -8,8 +8,8 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-        name='django-cart-improved',
-        version='1.0.0',
+        name='yet-another-django-cart',
+        version='1.0.1',
         description='Django simple shopping cart, tests and south migrations included',
         maintainer=u'Otávio Soares',
         maintainer_email='otaviokk@gmail.com',

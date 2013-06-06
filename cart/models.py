@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
 
 class Cart(models.Model):
     creation_date = models.DateTimeField(verbose_name=_('creation date'))
@@ -33,6 +32,8 @@ class Item(models.Model):
 
     objects = ItemManager()
 
+    product_options = models.ManyToManyField("ItemOption", blank=True)
+
     class Meta:
         verbose_name = _('item')
         verbose_name_plural = _('items')
@@ -41,9 +42,9 @@ class Item(models.Model):
     def __unicode__(self):
         return u'%d units of %s' % (self.quantity, self.product.__class__.__name__)
 
+    @property
     def total_price(self):
         return self.quantity * self.unit_price
-    total_price = property(total_price)
 
     # product
     def get_product(self):
@@ -55,3 +56,27 @@ class Item(models.Model):
 
     product = property(get_product, set_product)
 
+    # options
+    def get_options(self):
+        return [o.option for o in self.itemoption_set.all()]
+
+    def set_options(self, options):
+        for option in options:
+            itemoption = ItemOption(content_type = ContentType.objects.get_for_model(type(option)), object_id = option.pk)
+            self.product_options.add(itemoption)
+
+    def clear_options(self):
+        return self.product_options.clear()
+
+    options = property(get_options, set_options)
+
+
+class ItemOption(models.Model):
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+
+    # options
+    def get_option(self):
+        return self.content_type.get_object_for_this_type(id=self.object_id)
+
+    option = property(get_option)
