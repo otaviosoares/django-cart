@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
         name='yet-another-django-cart',
-        version='1.0.2',
+        version='1.0.3',
         description='Django simple shopping cart, tests and south migrations included',
         maintainer=u'Otávio Soares',
         maintainer_email='otaviokk@gmail.com',
