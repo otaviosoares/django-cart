@@ -3,3 +3,6 @@
 build
 dist
 django_cart.egg-info
+env
+*.egg-info
+distribute-*
