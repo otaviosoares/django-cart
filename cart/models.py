@@ -63,6 +63,7 @@ class Item(models.Model):
     def set_options(self, options):
         for option in options:
             itemoption = ItemOption(content_type = ContentType.objects.get_for_model(type(option)), object_id = option.pk)
+            itemoption.save()
             self.product_options.add(itemoption)
 
     def clear_options(self):
