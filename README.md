@@ -1,6 +1,6 @@
 # Introduction
 
-django-cart is a very simple application that just let you add and remove items from a session based cart. django-cart uses the power of the Django content type framework to enable you to have your own Product model and associate with the cart without having to change anything. Please refer to the tests to see how it's done.
+yet-another-django-cart is a very simple application that just let you add and remove items from a session based cart. it uses the power of the Django content type framework to enable you to have your own Product model and associate with the cart without having to change anything. Please refer to the tests to see how it's done.
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ python setup.py install
 or
 
 ```
-pip install django-cart
+pip install yet-another-django-cart
 ```
 
 After installation is complete:
@@ -30,7 +30,7 @@ After installation is complete:
 
 ## Usage
 
-A basic usage of django-cart could be (example):
+A basic usage of yet-another-django-cart could be (example):
 
 ```python
 # views.py

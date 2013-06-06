@@ -45,10 +45,11 @@ class Cart:
             item.product = product
             item.unit_price = unit_price
             item.quantity = quantity
-            if options:
-                item.options = options
 
             item.save()
+            
+            if options:
+                item.options = options
         else: #ItemAlreadyExists
 
             if options:
